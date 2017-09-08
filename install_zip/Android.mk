@@ -67,12 +67,20 @@ $(MULTIROM_ZIP_TARGET): multirom trampoline signapk bbootimg mrom_kexec_static m
 		\
 		if [ "$(TARGET_IS_64_BIT)" == "true" ]; then \
 			cp -a $(TARGET_OUT_EXECUTABLES)/linker64 $(MULTIROM_INST_DIR)/multirom/enc/; \
-			echo "Relinking /system/bin/linker64 to /mrom_enc/linker64"; \
+			echo "Relinking trampoline_encmnt /system/bin/linker64 to /mrom_enc/linker64"; \
 			sed -i "s|/system/bin/linker64\x0|/mrom_enc/linker64\x0\x0\x0|g" $(MULTIROM_INST_DIR)/multirom/enc/trampoline_encmnt; \
+			if [ -f "$(MULTIROM_INST_DIR)/multirom/enc/qseecomd" ]; then \
+				echo "Relinking qseecomd /system/bin/linker64 to /mrom_enc/linker64"; \
+				sed -i "s|/system/bin/linker64\x0|/mrom_enc/linker64\x0\x0\x0|g" $(MULTIROM_INST_DIR)/multirom/enc/qseecomd; \
+			fi; \
 		else \
 			cp -a $(TARGET_OUT_EXECUTABLES)/linker $(MULTIROM_INST_DIR)/multirom/enc/; \
-			echo "Relinking /system/bin/linker to /mrom_enc/linker"; \
+			echo "Relinking trampoline_encmnt /system/bin/linker to /mrom_enc/linker"; \
 			sed -i "s|/system/bin/linker\x0|/mrom_enc/linker\x0\x0\x0|g" $(MULTIROM_INST_DIR)/multirom/enc/trampoline_encmnt; \
+			if [ -f "$(MULTIROM_INST_DIR)/multirom/enc/qseecomd" ]; then \
+				echo "Relinking qseecomd /system/bin/linker to /mrom_enc/linker"; \
+				sed -i "s|/system/bin/linker\x0|/mrom_enc/linker\x0\x0\x0|g" $(MULTIROM_INST_DIR)/multirom/enc/qseecomd; \
+			fi; \
 		fi; \
 		\
 		cp -a $(install_zip_path)/prebuilt-installer/multirom/res/Roboto-Regular.ttf $(MULTIROM_INST_DIR)/multirom/enc/res/; \

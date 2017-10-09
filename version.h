@@ -17,7 +17,7 @@
 
 #ifndef VERSION_H
 #define VERSION_H
-    #define VERSION_MULTIROM 33
+    #define VERSION_MULTIROM 34
     #define VERSION_TRAMPOLINE 27
     #define VERSION_APKL 3
 
